@@ -1,20 +1,28 @@
 <script setup>
-import Task from "./Task.vue";
-const { tasks } = defineProps({
-	tasks: Array,
-});
-const emit = defineEmits(["remove"]);
+import { ref } from "vue";
+
+const emit = defineEmits(["add"]);
+const input = ref("");
+
+function add() {
+	emit("add", input.value);
+	input.value = "";
+}
 </script>
 
 <template>
-	<main>
-		<Task
-			v-for="task in tasks"
-			:key="task.id"
-			:task="task"
-			:remove="() => emit('remove', task)"
-		/>
-	</main>
+	<section class="input-box">
+		<div class="input-container">
+			<input
+				type="text"
+				v-model="input"
+				@keydown.enter="input.length > 0 ? add() : null"
+			/>
+			<button @click="add" :disabled="input.length === 0">
+				Add task
+			</button>
+		</div>
+	</section>
 </template>
 
 <style scoped>

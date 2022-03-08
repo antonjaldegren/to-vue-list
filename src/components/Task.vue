@@ -1,24 +1,25 @@
 <script setup>
-const { data } = defineProps({
-	data: Object,
+const props = defineProps({
+	task: Object,
+	remove: Function,
 });
 const emit = defineEmits(["remove"]);
 </script>
 
 <template>
-	<section class="task">
+	<section>
 		<div class="title-container">
-			<input type="checkbox" v-model="data.isCompleted" />
-			<h2 :class="{ completed: data.isCompleted }">
-				{{ data.title }}
+			<input type="checkbox" v-model="task.isCompleted" />
+			<h2 :class="{ completed: task.isCompleted }">
+				{{ task.title }}
 			</h2>
 		</div>
-		<div class="remove-button" @click="emit('remove', data)"></div>
+		<div class="remove-button" @click="remove"></div>
 	</section>
 </template>
 
 <style scoped>
-.task {
+section {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -79,7 +80,7 @@ h2 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: rgb(246, 112, 112) url("../x.svg");
+	background: rgb(246, 112, 112) url("../assets/x.svg");
 	background-size: 35%;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -88,6 +89,7 @@ h2 {
 	width: 1.8rem;
 	height: 1.8rem;
 	line-height: 0;
+	flex-shrink: 0;
 }
 
 .remove-button:hover {
